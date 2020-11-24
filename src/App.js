@@ -23,19 +23,26 @@ function App() {
       });
 
       spotify.setAccessToken(_token);
-      spotify.getMe().then((_user) =>{
+      spotify.getMe().then((user) => {
         dispatch({
           type: "SET_USER",
-          token: _user,
-        });
-      })
-      
-      spotify.getUserPlaylists().then((_playlists) => {
-        dispatch({
-          type: 'SET_PLAYLISTS',  
-          playlists: _playlists,
+          user,
         });
       });
+      
+      spotify.getUserPlaylists().then((playlists) => {
+        dispatch({
+          type: 'SET_PLAYLISTS',  
+          playlists: playlists,
+        });
+      });
+
+      spotify.getPlaylist('37i9dQZEVXcDeE5JYrhfWg').then(response => 
+        dispatch({
+          type: "SET_DISCOVER_WEEKLY",
+          discover_weekly: response,
+        })
+      );
     }
      
 
